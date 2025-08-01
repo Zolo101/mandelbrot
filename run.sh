@@ -1,1 +1,1 @@
-gcc mandelbrot.c -o mandelbrot && ./mandelbrot
+gcc mandelbrot.c -o mandelbrot -lm -O3 && ./mandelbrot

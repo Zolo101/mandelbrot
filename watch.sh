@@ -1,0 +1,1 @@
+ls *.c | entr ./run.sh
