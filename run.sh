@@ -1,1 +1,2 @@
-gcc mandelbrot.c -o mandelbrot -lm -O3 && ./mandelbrot
+echo "Compiling..."
+gcc -O3 mandelbrot.c -o mandelbrot -lm -Wall -Wextra && ./mandelbrot
