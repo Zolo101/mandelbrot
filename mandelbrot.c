@@ -1,4 +1,3 @@
-#include "mandelbrot.h"
 #include <complex.h>
 #include <math.h>
 #include <stdio.h>
@@ -7,7 +6,6 @@
 
 // const short WIDTH = 1280;
 // const short HEIGHT = 720;
-
 const short WIDTH = 1920;
 const short HEIGHT = 1280;
 
@@ -42,7 +40,7 @@ void computePalette(char palette[MAX_ITER][3]) {
         size_t x = pow(i, 2);
         size_t v = 128 - x;
 
-        char colour[3] = {v, 1 - v, 1 - (v / 2)};
+        char colour[3] = {v, 1 - v, 1 - (v / 2)}; // B, G, R
         memcpy(palette[i], colour, 3);
     }
 }
@@ -95,7 +93,7 @@ void computeGrid(double *grid) {
             double complex c = ((sX * 3.47) - OFFSET_X) + (((sY * 2.24) - OFFSET_Y) * I);
             double complex z = 0 + 0 * I;
             size_t iter = 0;
-            while (cabs(z) <= 2 && iter < MAX_ITER) {
+            while ((creal(z) * creal(z)) + (cimag(z) * cimag(z)) <= 4 && iter < MAX_ITER) {
                 z = (z * z) + c;
                 iter++;
             }

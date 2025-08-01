@@ -1,4 +1,6 @@
 mandelbrot
 *.bmp
-flamegraph.svg
-.vscode
+*.data
+*.data.old
+*.svg
+.vscode/
