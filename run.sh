@@ -1,2 +1,2 @@
 echo "Compiling..."
-gcc -O3 mandelbrot.c -o mandelbrot -lm -Wall -Wextra && ./mandelbrot
+zig run mandelbrot.zig -O ReleaseFast
