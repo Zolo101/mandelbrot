@@ -24,9 +24,9 @@ pub fn computePalette(palette: []u8) !void {
         const x: usize = i * i;
         const v: u8 = @truncate(128 -% x);
 
-        palette[i] = v;
-        palette[i] = 1 -% v;
-        palette[i] = 1 -% (v / 2);
+        palette[i * 3] = v;
+        palette[i * 3 + 1] = 255 - v;
+        palette[i * 3 + 2] = 255 - (v / 2);
     }
 }
 
@@ -46,8 +46,10 @@ pub fn saveToImage(filename: []const u8, grid: []f64) !void {
     _ = try writer.writeInt(u32, DIB_SIZE, .little);
     _ = try writer.writeInt(u16, WIDTH, .little);
     _ = try writer.writeInt(u16, HEIGHT, .little);
-    _ = try writer.writeInt(u16, 1, .little); // PLANES
-    _ = try writer.writeInt(u16, 24, .little); // DEPTH
+    // PLANES
+    _ = try writer.writeInt(u16, 1, .little);
+    // DEPTH
+    _ = try writer.writeInt(u16, 24, .little);
 
     // Pixel array
     var pixels = [_]u8{0} ** PIXEL_SIZE;
@@ -57,11 +59,10 @@ pub fn saveToImage(filename: []const u8, grid: []f64) !void {
     try computePalette(&palette);
 
     for (0..GRID_SIZE) |v| {
-        const value = @as(u32, @intFromFloat(grid[v] - 1)); // - 1 for indexing
-        const b = v * 3;
-        pixels[b] = palette[value];
-        pixels[b + 1] = palette[value + 1];
-        pixels[b + 2] = palette[value + 2];
+        const value = @as(u32, @intFromFloat(grid[v]));
+        pixels[v * 3] = palette[value * 3];
+        pixels[v * 3 + 1] = palette[value * 3 + 1];
+        pixels[v * 3 + 2] = palette[value * 3 + 2];
         // @memcpy(pixels[b], palette[value]);
     }
 
@@ -97,9 +98,10 @@ pub fn main() !void {
     const allocator = std.heap.page_allocator;
 
     const grid = try allocator.alloc(f64, GRID_SIZE);
+    defer allocator.free(grid);
+
     try computeGrid(grid);
     try saveToImage("image.bmp", grid);
 
-    defer allocator.free(grid);
     std.debug.print("Done\n", .{});
 }
