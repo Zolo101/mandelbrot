@@ -1,2 +1,2 @@
 echo "Compiling..."
-zig run mandelbrot.zig -O ReleaseFast
+cargo run --release

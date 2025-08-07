@@ -1,2 +1,2 @@
 ./run.sh
-flamegraph -- ./mandelbrot
+cargo flamegraph

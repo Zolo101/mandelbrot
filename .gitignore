@@ -4,3 +4,8 @@ mandelbrot
 *.data.old
 *.svg
 .vscode/
+other/
+
+# Added by cargo
+
+/target

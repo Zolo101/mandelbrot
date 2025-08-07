@@ -1,1 +1,1 @@
-ls *.zig | entr ./run.sh
+ls src/*.rs | entr ./run.sh
